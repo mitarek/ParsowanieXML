@@ -1,7 +1,9 @@
 package com.example.admin.parsowaniexml;
 
+import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,7 +17,10 @@ public class XMLParser extends DefaultHandler{
     StringBuilder builder;
     XmlValuesModel jobsValues = null;
 
-    
+    @Override
+    public void startDocument() throws SAXException {
+        list = new ArrayList<XmlValuesModel>();
+    }
 
 
 }
