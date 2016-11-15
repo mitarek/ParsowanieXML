@@ -2,6 +2,7 @@ package com.example.admin.parsowaniexml;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -26,8 +27,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        b1 = (Button)findViewById(R.id.b1);
-        t1 = (TextView)findViewById(R.id.t1);
+        b1 = (Button) findViewById(R.id.b1);
+        t1 = (TextView) findViewById(R.id.t1);
 
         final String XMLData = "" +
                 "<?xml version=\"1.0\"?>" +
@@ -56,27 +57,33 @@ public class MainActivity extends AppCompatActivity {
                 SAXParserFactory factory = SAXParserFactory.newInstance();
 
                 try {
-                    SAXParser sp=factory.newSAXParser();
+                    SAXParser sp = factory.newSAXParser();
                     XMLReader reader = sp.getXMLReader();
                     reader.setContentHandler(parser);
                     reader.parse(is);
                     myData = parser.list;
-                    if (myData!=null){
-                        String OutputData="";
+                    if (myData != null) {
+                        String OutputData = "";
 
-                        for (XmlValuesModel xmlRowData: myData) {
-                            if (xmlRowData!=null){
+                        for (XmlValuesModel xmlRowData : myData) {
+                            if (xmlRowData != null) {
 
-                                int id=xmlRowData.getId();
+                                int id = xmlRowData.getId();
                                 int companyid = xmlRowData.getCompanyid();
-                                String  company = xmlRowData.getCompany();
-                                String  adress = xmlRowData.getAddress();
-                                String  city = xmlRowData.getCity();
+                                String company = xmlRowData.getCompany();
+                                String adress = xmlRowData.getAddress();
+                                String city = xmlRowData.getCity();
+                                OutputData += "Job node: \n\n " +
+                                        company + " | " +
+                                        adress + " | " +
+                                        city + " | " +
+                                        "\n\n";
 
 
-
-                            }
+                            } else
+                                Log.e("Jobs", "Wartosc job jest null");
                         }
+                        t1.setText(OutputData);
 
                     }
 
@@ -92,7 +99,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
 
 
     }
