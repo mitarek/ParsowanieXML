@@ -2,9 +2,16 @@ package com.example.admin.parsowaniexml;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import org.xml.sax.*;
+import javax.xml.parsers.*;
 
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.StringReader;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -38,6 +45,53 @@ public class MainActivity extends AppCompatActivity {
                 "</job>" +
                 "</jobs>" +
                 "</login>";
+
+        b1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BufferedReader br = new BufferedReader(new StringReader(XMLData));
+                InputSource is = new InputSource(br);
+                XMLParser parser = new XMLParser();
+
+                SAXParserFactory factory = SAXParserFactory.newInstance();
+
+                try {
+                    SAXParser sp=factory.newSAXParser();
+                    XMLReader reader = sp.getXMLReader();
+                    reader.setContentHandler(parser);
+                    reader.parse(is);
+                    myData = parser.list;
+                    if (myData!=null){
+                        String OutputData="";
+
+                        for (XmlValuesModel xmlRowData: myData) {
+                            if (xmlRowData!=null){
+
+                                int id=xmlRowData.getId();
+                                int companyid = xmlRowData.getCompanyid();
+                                String  company = xmlRowData.getCompany();
+                                String  adress = xmlRowData.getAddress();
+                                String  city = xmlRowData.getCity();
+
+
+
+                            }
+                        }
+
+                    }
+
+
+                } catch (ParserConfigurationException e) {
+                    e.printStackTrace();
+                } catch (SAXException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+        });
 
 
 

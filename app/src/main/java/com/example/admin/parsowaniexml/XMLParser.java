@@ -71,4 +71,11 @@ public class XMLParser extends DefaultHandler{
 
         }
     }
+
+    @Override
+    public void characters(char[] ch, int start, int length) throws SAXException {
+        String tempString = new String(ch, start, length);
+        builder.append(tempString);
+
+    }
 }
